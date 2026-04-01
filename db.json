@@ -1,0 +1,38 @@
+{
+  "user": [
+    {
+      "id": "1234",
+      "email": "admin@hr.com",
+      "password": "admin",
+      "name": "Administrator",
+      "role": "hr",
+      "department": "HR"
+    },
+    {
+      "id": "5678",
+      "email": "employ@biz.com",
+      "password": "asdf",
+      "name": "Jane Employee",
+      "role": "employee",
+      "department": "IT"
+    },
+    {
+      "id": "e22b",
+      "email": "asdf@asdf.com",
+      "password": "asdfasdf",
+      "department": "Security",
+      "role": "employee"
+    }
+  ],
+  "leaveRequest": [
+    {
+      "id": "",
+      "userId": "",
+      "createdDate": "",
+      "startDate": "",
+      "endDate": "",
+      "approvalStatus": ""
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
