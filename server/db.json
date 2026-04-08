@@ -1,0 +1,53 @@
+{
+  "user": [
+    {
+      "id": "1234",
+      "email": "admin@hr.com",
+      "password": "admin",
+      "name": "Administrator",
+      "role": "hr",
+      "department": "HR"
+    },
+    {
+      "id": "5678",
+      "email": "sleve@biz.com",
+      "password": "asdf",
+      "name": "Sleve McDichael",
+      "role": "employee",
+      "department": "IT"
+    },
+    {
+      "id": "e22b",
+      "email": "mario@secure.com",
+      "password": "asdf",
+      "name": "Mario McRlwain",
+      "department": "Security",
+      "role": "employee"
+    },
+    {
+      "id": "5644",
+      "name": "Scott Heath",
+      "email": "scott@heath.com",
+      "department": "Engineering",
+      "role": "hr",
+      "password": "scott"
+    },
+    {
+      "id": "caad",
+      "name": "Millie Rojas",
+      "email": "millie@rojas.com",
+      "department": "Sales",
+      "role": "employee",
+      "password": "millie"
+    },
+    {
+      "id": "b6f4",
+      "name": "Test Tester",
+      "email": "test@tester.com",
+      "department": "QA",
+      "role": "employee"
+    }
+  ],
+  "leaveRequest": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}

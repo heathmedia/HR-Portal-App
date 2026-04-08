@@ -1,7 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
-import bgImage from "../assets/bg-water-cooler.jpg"
 
 function Login() {
     const USER_URL = "http://localhost:3000/user"
@@ -22,7 +21,6 @@ function Login() {
                 let foundUser = users.find((user) => user.email === email)
 
                 if (foundUser && foundUser?.password === password && foundUser?.role === role) {
-                    setMessage('Login success!')
                     localStorage.setItem("userId", foundUser.id)
                     localStorage.setItem("role", foundUser.role)
 
@@ -43,10 +41,9 @@ function Login() {
     }
 
     return (
-        // <div className="bg-fixed bg-center bg-cover h-full w-full" style={{ backgroundImage: `url(${bgImage})` }}>
-        <div>
+        <div className="bg-[url('./assets/bg-water-cooler.jpg')] w-full h-full fixed bg-cover bg-center">
             <form onSubmit={handleSubmit} className="flex items-center mt-20 ml-10">
-                <div className="grid border-1 p-10 pb-5 w-100 rounded-l flex flex-wrap">
+                <div className="grid border-1 p-10 pb-5 w-100 rounded-lg flex flex-wrap bg-white">
                     <h1 className="text-center w-full text-2xl font-bold mb-5">Login</h1>
                     <div className="mb-3 grid grid-cols-1">
                         <label htmlFor="email" className="mb-1">Email</label>
@@ -96,7 +93,8 @@ function Login() {
                     <input type="submit" value="Login"
                         className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" />
                     <p className="text-center mt-2 text-red-500" id="message">{message}</p>
-                    <p className="text-center">No account? <Link to="signup" className="underline">Sign up</Link></p>
+                    <p className="text-center">No account? <Link to="signup" className="underline text-primary">Sign up</Link></p>
+                    <p className="text-sm text-center mt-4 text-gray-400">Default HR admin credentials: <br/>Email: admin@hr.com / Password: admin</p>
                 </div>
             </form>
         </div>

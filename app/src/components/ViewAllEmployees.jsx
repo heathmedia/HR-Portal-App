@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import PrimarySubmitButton from "./PrimarySubmitButton"
 
 function ViewAllEmployees() {
     const API_URL = "http://localhost:3000"
@@ -16,12 +17,10 @@ function ViewAllEmployees() {
 
     useEffect(() => {
         const getAllEmployees = async () => {
-            console.log('Getting all employees...')
             try {
                 axios.get(USER_URL)
                     .then((result) => {
-                        console.log(result.data)
-                        setEmployees(result.data.filter(employee=>employee.id !== '1234'))
+                        setEmployees(result.data.filter(employee => employee.id !== '1234'))
                         return
                     })
             } catch (error) {
@@ -40,7 +39,6 @@ function ViewAllEmployees() {
             department,
             role
         }
-        console.log('new employee: ', newEmployee)
         const response = await axios.post(USER_URL, newEmployee)
         setEmployees([...employees, response.data])
         setName('')
@@ -49,10 +47,19 @@ function ViewAllEmployees() {
         setRole('employee')
     }
 
+    const deleteEmployee = async (id) => {
+        try {
+            const response = await axios.delete(USER_URL + "/" + id)
+            setEmployees(employees.filter(item => item.id !== id))
+        } catch (error) {
+            console.log('Error deleting employee', error)
+        }
+    }
+
     return (
         <>
             <h1 className="text-2xl font-bold mb-5">Employees</h1>
-            
+
             <div>
                 {/* Being Add Employee Form */}
                 <h2 className="text-xl mb-5">Add Employee</h2>
@@ -87,9 +94,7 @@ function ViewAllEmployees() {
                                 <option value='hr'>HR</option>
                             </select>
                         </div>
-                        <input type="submit" value="Add Employee"
-                            className="cursor-pointer bg-blue-600 hover:bg-blue-700 
-                                text-white font-bold rounded-full px-3 py-1.5 mb-3" />
+                        <PrimarySubmitButton value="Add Employee"></PrimarySubmitButton>
                         <span id="errorMsg" className="w-full text-red-500 mb-3">{errorMsg}</span>
                         <span id="msg" className="w-full text-green-500 mb-3">{msg}</span>
                     </div>
@@ -101,7 +106,7 @@ function ViewAllEmployees() {
                 <div className="flex flex-wrap">
                     <table className="w-full border-collapse border-blue-50">
                         <thead className="border-b-1">
-                            <tr className="p-2 bg-blue-700 text-white">
+                            <tr className="p-2 bg-primary text-white">
                                 <th className="text-center p-2">Employee ID</th>
                                 <th className="text-center p-2">Name</th>
                                 <th className="text-left p-2">Email</th>
@@ -122,9 +127,10 @@ function ViewAllEmployees() {
                                         <td className="border-b border-blue-100 p-2">{user?.name}</td>
                                         <td className="border-b border-blue-100 p-2">{user?.email}</td>
                                         <td className="text-center border-b border-blue-100 p-2">{user?.department}</td>
-                                        <td className="text-center border-b border-blue-100 p-2">{user?.password ? <i className="text-green-500 fa-solid fa-check"></i> : '-'}</td>
                                         <td className="text-center border-b border-blue-100 p-2">
-                                            <button onClick={() => deleteRequest(user.id)}
+                                            {user?.password ? <i className="text-green-500 fa-solid fa-check"></i> : '-'}</td>
+                                        <td className="text-center border-b border-blue-100 p-2">
+                                            <button onClick={() => deleteEmployee(user.id)}
                                                 title="Delete"
                                                 aria-label="Delete request"
                                                 className="text-gray-400 hover:text-gray-600 cursor-pointer">

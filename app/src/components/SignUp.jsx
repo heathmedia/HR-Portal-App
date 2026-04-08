@@ -14,52 +14,21 @@ function SignUp() {
 
     let validateEmail = async () => {
         if (!email) {
-            setEmailMessage('Email is required')
+            setEmailMsg('Email is required')
             return false
         }
 
         return axios.get(USER_URL + "?email=" + email)
             .then((result) => {
-                console.log(result)
                 if (result.data.length > 0) {
-                    setEmailMessage('Email already taken')
-                    return false
+                    setEmailMsg('Email already taken')
+                    return
                 } else {
-                    setEmailMessage('')
-                    return true
+                    setEmailMsg('')
+                    return
                 }
             })
     }
-
-    // let validatePassword = () => {
-    //     if (!password) {
-    //         setPasswordMessage('Password is required')
-    //         return false
-    //     }
-
-    //     setPasswordMessage('')
-    //     return true
-    // }
-
-    // let validateDepartment = () => {
-    //     if (!department) {
-    //         setDepartmentMessage('Department is required')
-    //         return false
-    //     }
-
-    //     setDepartmentMessage('')
-    //     return true
-    // }
-
-    // let validateRole = () => {
-    //     if (!role) {
-    //         setRoleMessage('Select a role')
-    //         return false
-    //     }
-
-    //     setRoleMessage('')
-    //     return true
-    // }
 
     const checkEmail = async (event) => {
         event.preventDefault()
@@ -67,38 +36,35 @@ function SignUp() {
         const reponse = axios.get(USER_URL + "?email=" + email)
             .then(result => {
                 // Accounts must have been previously created by an admin
-                if(result.data.length === 0) {
+                if (result.data.length === 0) {
                     setEmailMsg('Email is not associated with an account')
                     return
                 }
                 const user = result.data[0]
                 // Only accounts without passwords are eligible for sign up
-                if(user.password) {
+                if (user.password) {
                     setEmailMsg('Email is already registered')
                     return
                 }
                 setUser(user)
                 setIsPasswordSaved(false)
                 setShowDetails(true)
-                console.log('found user: ', user)
             })
     }
 
     const savePassword = async (event) => {
         event.preventDefault()
-        const reponse = await axios.patch(USER_URL + `/${user.id}`, {
-            password
-        }).then(result => {
-            setIsPasswordSaved(true)
-        })
-        console.log('save password: ', reponse)
+        const reponse = await axios.patch(USER_URL + `/${user.id}`, { password })
+            .then(result => {
+                setIsPasswordSaved(true)
+            })
     }
 
     return (
-        <>
+        <div className="bg-[url('./assets/bg-water-cooler.jpg')] w-full h-full fixed bg-cover bg-center">
             {!showDetails ?
                 <form onSubmit={(event) => checkEmail(event)} className="flex items-center mt-20 ml-10">
-                    <div className="grid border-1 p-10 pb-5 w-100 rounded-l flex flex-wrap">
+                    <div className="grid border-1 p-10 pb-5 w-100 g flex flex-wrap bg-white">
                         <h1 className="text-center w-full text-2xl font-bold mb-2">Sign Up</h1>
                         <p className="text-center mb-5">Enter your email to verify access</p>
                         <div className="mb-3 grid grid-cols-1">
@@ -117,10 +83,10 @@ function SignUp() {
                 :
                 <form onSubmit={savePassword} className="flex items-center mt-20 ml-10">
 
-                    <div className="grid border-1 px-10 py-8 w-100 rounded-l flex flex-wrap">
+                    <div className="grid border-1 px-10 py-8 w-100 rounded-lg flex flex-wrap bg-white">
                         <div>
                             <button onClick={() => setShowDetails(false)}
-                                className="cursor-pointer hover:underline" >
+                                className="cursor-pointer hover:underline text-primary" >
                                 <i className="fa-solid fa-arrow-left"></i> Back
                             </button>
                         </div>
@@ -165,7 +131,7 @@ function SignUp() {
                     </div>
                 </form>
             }
-        </>
+        </div>
     )
 }
 

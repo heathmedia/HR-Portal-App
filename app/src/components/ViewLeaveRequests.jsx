@@ -26,12 +26,12 @@ function ViewLeaveRequests() {
     const [leaveRequests, setLeaveRequests] = useState([])
     const [startDate, setStartDate] = useState()
     const [endDate, setEndDate] = useState()
+    const [reason, setReason] = useState('')
     const [msg, setMsg] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
 
     useEffect(() => {
         const getLeaveRequests = async () => {
-            console.log('Getting leave requests...')
             try {
                 const result = await axios.get(REQUEST_URL, { params: { userId: USER_ID } })
                 setLeaveRequests(result.data)
@@ -50,11 +50,8 @@ function ViewLeaveRequests() {
 
     const submitRequest = async (event) => {
         event.preventDefault()
-        console.log('submit request')
         setErrorMsg('')
         setMsg('')
-        console.log('start date', startDate)
-        console.log('end date', endDate)
 
         if (!startDate) { setErrorMsg('Select a start date'); return }
         if (!endDate) { setErrorMsg('Select an end date'); return }
@@ -64,22 +61,23 @@ function ViewLeaveRequests() {
             userId: USER_ID,
             startDate,
             endDate,
+            reason,
             createdDate: TODAY,
             status: "pending"
         }
 
         const reponse = await axios.post(REQUEST_URL, newRequest)
-        console.log('Saved request: ', newRequest)
         setLeaveRequests([...leaveRequests, reponse.data])
+        setStartDate('')
+        setEndDate('')
+        setReason('')
         setMsg('Leave request saved!')
     }
 
     const deleteRequest = async (id) => {
-        console.log('delete request: ', id)
         try {
             const response = await axios.delete(REQUEST_URL + "/" + id)
             setLeaveRequests(leaveRequests.filter(item => item.id !== id))
-            console.log('deleted request: ', response)
         } catch (error) {
             console.log('Error deleting request', error)
         }
@@ -89,6 +87,7 @@ function ViewLeaveRequests() {
         <div>
             <h1 className="text-2xl font-bold mb-5">Leave Requests</h1>
             <div className="flex flex-wrap">
+
                 {/* Begin Add Leave Request Form */}
                 <form onSubmit={submitRequest} className="flex flex-wrap mb-6 py-3 items-center">
                     <div className="flex flex-wrap pb-4 items-center">
@@ -96,16 +95,25 @@ function ViewLeaveRequests() {
                         <div className="mr-4 mb-3">
                             <label htmlFor="startDate" className="mb-2 mr-2">Start Date</label>
                             <input id="startDate" type="date" min={TODAY}
+                                value={startDate}
                                 onChange={(event) => setStartDate(event.target.value)}
                                 className="self-justify-end border-1 px-2 py-1 rounded" />
                         </div>
                         <div className="mr-4 mb-3">
                             <label htmlFor="endDate" className="mb-2 mr-2">End Date</label>
                             <input id="endDate" type="date" min={startDate ? startDate : TODAY}
+                                value={endDate}
                                 onChange={(event) => setEndDate(event.target.value)}
                                 className="self-justify-end border-1 px-2 py-1 rounded" />
                         </div>
-                        <PrimarySubmitButton></PrimarySubmitButton>
+                        <div className="mr-4 mb-3">
+                            <label htmlFor="reason" className="mb-2 mr-2">Reason</label>
+                            <input id="reason" type="text"
+                                value={reason}
+                                onChange={(event) => setReason(event.target.value)}
+                                className="self-justify-end border-1 px-2 py-1 rounded" />
+                        </div>
+                        <PrimarySubmitButton value="Submit Request"></PrimarySubmitButton>
                         <p id="errorMsg" hidden={!errorMsg}
                             className="text-red-500 mb-3">{errorMsg}</p>
                         <p id="msg" hidden={!msg}
@@ -122,6 +130,7 @@ function ViewLeaveRequests() {
                             <th className="text-center p-2">Created On</th>
                             <th className="text-center p-2">Start Date</th>
                             <th className="text-center p-2">End Date</th>
+                            <th className="text-center p-2">Reason</th>
                             <th className="text-center p-2">Status</th>
                             <th className="text-center p-2"></th>
                         </tr>
@@ -129,7 +138,7 @@ function ViewLeaveRequests() {
                     <tbody>
                         {
                             leaveRequests.length === 0 ?
-                                <tr className="text-center"><td colSpan="4" className="p-2">
+                                <tr className="text-center"><td colSpan="5" className="p-2">
                                     No leave requests to display</td></tr> : ''}
                         {
                             leaveRequests.map((request, index) => (
@@ -138,6 +147,7 @@ function ViewLeaveRequests() {
                                     <td className="text-center border-b border-blue-100 p-2">{formatDate(request?.createdDate)}</td>
                                     <td className="text-center border-b border-blue-100 p-2">{formatDate(request?.startDate)}</td>
                                     <td className="text-center border-b border-blue-100 p-2">{formatDate(request?.endDate)}</td>
+                                    <td className="text-center border-b border-blue-100 p-2">{request?.reason}</td>
                                     <td className="text-center border-b border-blue-100 p-2">
                                         <StatusBadge status={request.status}></StatusBadge>
                                     </td>
