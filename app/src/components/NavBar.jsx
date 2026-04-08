@@ -2,12 +2,13 @@ import { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import logo from "../assets/hrportal-logo-white.png"
 
-function NavBar({ userId, role }) {
+function NavBar({ userId, onLogout }) {
 
     const navigate = useNavigate()
     const logout = () => {
         localStorage.removeItem('userId')
         localStorage.removeItem('role')
+        onLogout() // Callback to App to clear userId so nav reverts to logged out state
         navigate("/")
     }
 
@@ -24,10 +25,12 @@ function NavBar({ userId, role }) {
             <img src={logo} alt="HR Portal" className="h-6 ml-2" />
             <nav className="text-white">
                 <ul className="flex flex-wrap">
-                    <li hidden={userId} className="mr-4 hover:underline"><Link to='/signup'>Sign Up</Link></li>
-                    <li hidden={userId} className="mr-4 hover:underline"><Link to='/'>Login</Link></li>
-                    <button hidden={!userId} className="mr-4 cursor-pointer hover:underline"
-                        onClick={() => logout()}>Logout</button>
+                    {!userId ?
+                        <>
+                            <li className="mr-4 hover:underline"><Link to='/signup'>Sign Up</Link></li>
+                            <li className="mr-4 hover:underline"><Link to='/'>Login</Link></li>
+                        </>
+                        : <button className="mr-4 cursor-pointer hover:underline" onClick={() => logout()}>Logout</button>}
                 </ul>
             </nav>
         </header>

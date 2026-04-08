@@ -2,7 +2,7 @@ import { useState } from "react"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 
-function Login() {
+function Login({ onLogin }) {
     const USER_URL = "http://localhost:3000/user"
     const navigate = useNavigate()
 
@@ -23,6 +23,8 @@ function Login() {
                 if (foundUser && foundUser?.password === password && foundUser?.role === role) {
                     localStorage.setItem("userId", foundUser.id)
                     localStorage.setItem("role", foundUser.role)
+
+                    onLogin(foundUser.id) // Callback to App so NavBar updates to show logged in view
 
                     switch (foundUser.role) {
                         case "hr":
