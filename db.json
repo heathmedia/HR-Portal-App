@@ -37,14 +37,16 @@
       "name": "Millie Rojas",
       "email": "m@r.com",
       "department": "IT",
-      "role": "hr"
+      "role": "employee",
+      "password": "asdf"
     },
     {
       "id": "5644",
       "name": "Scott Heath",
       "email": "scott@heath.com",
       "department": "Engineering",
-      "role": "hr"
+      "role": "hr",
+      "password": "scott"
     },
     {
       "id": "5456",
@@ -68,7 +70,7 @@
       "startDate": "2026-04-07",
       "endDate": "2026-04-08",
       "createdDate": "2026-04-07",
-      "status": "approved"
+      "status": "denied"
     },
     {
       "id": "81e1",
@@ -79,11 +81,35 @@
       "status": "pending"
     },
     {
-      "id": "b52b",
-      "userId": null,
-      "startDate": "2026-04-10",
-      "endDate": "2026-04-11",
-      "createdDate": "2026-04-07",
+      "id": "eb97",
+      "userId": "42a8",
+      "startDate": "2026-04-08",
+      "endDate": "2026-04-09",
+      "createdDate": "2026-04-08",
+      "status": "approved"
+    },
+    {
+      "id": "d8d3",
+      "userId": "42a8",
+      "startDate": "2026-04-09",
+      "endDate": "2026-04-23",
+      "createdDate": "2026-04-08",
+      "status": "pending"
+    },
+    {
+      "id": "ae9f",
+      "userId": "42a8",
+      "startDate": "2026-04-16",
+      "endDate": "2026-04-30",
+      "createdDate": "2026-04-08",
+      "status": "pending"
+    },
+    {
+      "id": "a25c",
+      "userId": "42a8",
+      "startDate": "2026-04-08",
+      "endDate": "2026-04-08",
+      "createdDate": "2026-04-08",
       "status": "pending"
     }
   ],

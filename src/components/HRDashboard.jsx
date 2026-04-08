@@ -6,8 +6,8 @@ function HRDashboard() {
             <div>
                 <nav className="w-full text-lg p-4 border-b-1">
                     <ul className="w-full flex flex-wrap">
+                        <li className="mr-4"><Link to="viewEmployees">Employees</Link></li>
                         <li className="mr-4"><Link to="viewAllLeaveRequests">Leave Requests</Link></li>
-                        <li><Link to="viewEmployees">Employees</Link></li>
                     </ul>
                 </nav>
             </div>

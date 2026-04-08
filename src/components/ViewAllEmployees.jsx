@@ -21,7 +21,7 @@ function ViewAllEmployees() {
                 axios.get(USER_URL)
                     .then((result) => {
                         console.log(result.data)
-                        setEmployees(result.data)
+                        setEmployees(result.data.filter(employee=>employee.id !== '1234'))
                         return
                     })
             } catch (error) {
@@ -97,7 +97,10 @@ function ViewAllEmployees() {
                             <tr className="p-2 bg-blue-700 text-white">
                                 <th className="text-center p-2">Employee ID</th>
                                 <th className="text-center p-2">Name</th>
+                                <th className="text-left p-2">Email</th>
                                 <th className="text-center p-2">Department</th>
+                                <th className="text-center p-2">Registered</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,15 +113,17 @@ function ViewAllEmployees() {
                                         className={index % 2 === 0 ? 'bg-white' : 'bg-blue-50'}>
                                         <td className="text-center border-b border-blue-100 p-2">{user?.id}</td>
                                         <td className="border-b border-blue-100 p-2">{user?.name}</td>
+                                        <td className="border-b border-blue-100 p-2">{user?.email}</td>
                                         <td className="text-center border-b border-blue-100 p-2">{user?.department}</td>
-                                        {/* <td className="text-center border-b border-blue-100 p-2">
+                                        <td className="text-center border-b border-blue-100 p-2">{user?.password ? <i className="text-green-500 fa-solid fa-check"></i> : '-'}</td>
+                                        <td className="text-center border-b border-blue-100 p-2">
                                             <button onClick={() => deleteRequest(user.id)}
                                                 title="Delete"
                                                 aria-label="Delete request"
                                                 className="text-gray-400 hover:text-gray-600 cursor-pointer">
                                                 <i className="fa-solid fa-trash"></i>
                                             </button>
-                                        </td> */}
+                                        </td>
                                     </tr>
                                 ))
                             }

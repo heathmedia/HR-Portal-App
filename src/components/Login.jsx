@@ -1,6 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import bgImage from "../assets/bg-water-cooler.jpg"
 
 function Login() {
@@ -28,10 +28,10 @@ function Login() {
 
                     switch (foundUser.role) {
                         case "hr":
-                            navigate("/hrdashboard")
+                            navigate("/hrdashboard/viewEmployees")
                             break
                         case "employee":
-                            navigate("/dashboard")
+                            navigate("/dashboard/viewLeaveRequests")
                     }
 
                 } else {
@@ -91,12 +91,12 @@ function Login() {
                                 />
                                 HR Admin
                             </label>
-
                         </div>
                     </fieldset>
                     <input type="submit" value="Login"
                         className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" />
                     <p className="text-center mt-2 text-red-500" id="message">{message}</p>
+                    <p className="text-center">No account? <Link to="signup" className="underline">Sign up</Link></p>
                 </div>
             </form>
         </div>

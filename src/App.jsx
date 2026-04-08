@@ -5,9 +5,10 @@ import EmployeeDashboard from "./components/EmployeeDashboard"
 import { useEffect } from "react"
 import SignUp from "./components/SignUp"
 import NavBar from "./components/NavBar"
-import Logout from "./components/Logout"
 import ViewAllEmployees from "./components/ViewAllEmployees"
 import ViewAllLeaveRequests from "./components/ViewAllLeaveRequests"
+import ViewLeaveRequests from "./components/ViewLeaveRequests"
+import Profile from "./components/Profile"
 
 function App() {
 
@@ -21,16 +22,18 @@ function App() {
       <div>
         <Routes>
           <Route path="" element={<Login />} />
+          {/* <Route path="logout" element={<Logout />} /> */}
           <Route path="signup" element={<SignUp />} />
 
-          <Route path="dashboard" element={<EmployeeDashboard />} />
+          <Route path="dashboard" element={<EmployeeDashboard />}>
+            <Route path="viewLeaveRequests" element={<ViewLeaveRequests />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
 
           <Route path="hrdashboard" element={<HRDashboard />}>
             <Route path="viewAllLeaveRequests" element={<ViewAllLeaveRequests />}></Route>
             <Route path="viewEmployees" element={<ViewAllEmployees />}></Route>
           </Route>
-
-          <Route path="logout" element={<Logout />} />
         </Routes>
       </div>
     </>
