@@ -52,44 +52,51 @@ function ViewAllEmployees() {
     return (
         <>
             <h1 className="text-2xl font-bold mb-5">Employees</h1>
+            
             <div>
+                {/* Being Add Employee Form */}
                 <h2 className="text-xl mb-5">Add Employee</h2>
                 <form onSubmit={(event) => addEmployee(event)} className="flex flex-wrap mb-2">
-                    <div className="flex flex-wrap w-full pb-4">
-                        <div className="mr-5">
+                    <div className="flex flex-wrap w-full pb-4 items-center">
+                        <div className="mr-5 mb-3">
                             <label htmlFor="name" className="mb-2 mr-2">Name</label>
                             <input id="name" type="text" placeholder="First and last name"
                                 required value={name}
                                 onChange={(event) => setName(event.target.value)}
                                 className="self-justify-end border-1 px-2 py-1 rounded" />
                         </div>
-                        <div className="mr-5">
+                        <div className="mr-5 mb-3">
                             <label htmlFor="email" className="mb-2 mr-2">Email</label>
                             <input id="email" type="email" placeholder="name@email.com"
                                 required value={email}
                                 onChange={(event) => setEmail(event.target.value)}
                                 className="self-justify-end border-1 px-2 py-1 rounded" />
                         </div>
-                        <div className="mr-5">
+                        <div className="mr-5 mb-3">
                             <label htmlFor="department" className="mb-2 mr-2">Department</label>
                             <input id="department" type="text" placeholder="e.g. IT, Engineering, etc."
                                 required value={department}
                                 onChange={(event) => setDepartment(event.target.value)}
                                 className="self-justify-end border-1 px-2 py-1 rounded" />
                         </div>
-                        <div className="mr-5">
+                        <div className="mr-5 mb-3">
                             <label htmlFor="role" className="mb-2 mr-2">Role</label>
-                            <select onChange={(event) => setRole(event.target.value)} value={role}>
+                            <select onChange={(event) => setRole(event.target.value)} value={role}
+                                className="border-1 rounded p-1.5">
                                 <option value='employee'>Employee</option>
                                 <option value='hr'>HR</option>
                             </select>
                         </div>
                         <input type="submit" value="Add Employee"
-                            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full px-2" />
+                            className="cursor-pointer bg-blue-600 hover:bg-blue-700 
+                                text-white font-bold rounded-full px-3 py-1.5 mb-3" />
                         <span id="errorMsg" className="w-full text-red-500 mb-3">{errorMsg}</span>
                         <span id="msg" className="w-full text-green-500 mb-3">{msg}</span>
                     </div>
                 </form>
+                {/* End Add Employee Form */}
+
+                {/* Begin All Employees Table */}
                 <h2 className="text-xl mb-5">All Employees</h2>
                 <div className="flex flex-wrap">
                     <table className="w-full border-collapse border-blue-50">
@@ -129,6 +136,7 @@ function ViewAllEmployees() {
                             }
                         </tbody>
                     </table>
+                    {/* End All Employees Table */}
                 </div>
             </div>
         </>

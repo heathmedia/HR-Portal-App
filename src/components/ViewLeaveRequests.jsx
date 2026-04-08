@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
+import PrimarySubmitButton from "./PrimarySubmitButton"
 
 function ViewLeaveRequests() {
     const API_URL = "http://localhost:3000"
@@ -88,31 +89,32 @@ function ViewLeaveRequests() {
         <div>
             <h1 className="text-2xl font-bold mb-5">Leave Requests</h1>
             <div className="flex flex-wrap">
-                <form onSubmit={submitRequest} className="flex flex-wrap mb-6 py-3">
+                {/* Begin Add Leave Request Form */}
+                <form onSubmit={submitRequest} className="flex flex-wrap mb-6 py-3 items-center">
                     <div className="flex flex-wrap pb-4 items-center">
                         <h2 className="text-left text-xl mb-2 w-full">Create New Request</h2>
-                        <div className="mr-4">
+                        <div className="mr-4 mb-3">
                             <label htmlFor="startDate" className="mb-2 mr-2">Start Date</label>
                             <input id="startDate" type="date" min={TODAY}
                                 onChange={(event) => setStartDate(event.target.value)}
                                 className="self-justify-end border-1 px-2 py-1 rounded" />
                         </div>
-                        <div className="mr-4">
+                        <div className="mr-4 mb-3">
                             <label htmlFor="endDate" className="mb-2 mr-2">End Date</label>
                             <input id="endDate" type="date" min={startDate ? startDate : TODAY}
                                 onChange={(event) => setEndDate(event.target.value)}
                                 className="self-justify-end border-1 px-2 py-1 rounded" />
                         </div>
-                        <input type="submit" value="Submit Request"
-                            className="cursor-pointer bg-blue-600 hover:bg-blue-700 
-                                text-white font-bold rounded-full px-2 mr-4" />
-                        <span id="errorMsg" hidden={!errorMsg}
-                            className="text-red-500">{errorMsg}</span>
-                        <span id="msg" hidden={!msg}
-                            className="text-green-600">{msg}</span>
+                        <PrimarySubmitButton></PrimarySubmitButton>
+                        <p id="errorMsg" hidden={!errorMsg}
+                            className="text-red-500 mb-3">{errorMsg}</p>
+                        <p id="msg" hidden={!msg}
+                            className="text-green-600 mb-3">{msg}</p>
                     </div>
                 </form>
+                {/* End Add Leave Request Form */}
 
+                {/* Begin View Leave Requests Table */}
                 <table className="w-full border-collapse border-blue-50">
                     <caption className="text-left text-xl mb-2">Your Requests</caption>
                     <thead className="border-b-1">
@@ -127,7 +129,8 @@ function ViewLeaveRequests() {
                     <tbody>
                         {
                             leaveRequests.length === 0 ?
-                                <tr className="text-center"><td colSpan="4" className="p-2">No leave requests to display</td></tr> : ''}
+                                <tr className="text-center"><td colSpan="4" className="p-2">
+                                    No leave requests to display</td></tr> : ''}
                         {
                             leaveRequests.map((request, index) => (
                                 <tr key={request?.id}
@@ -151,6 +154,7 @@ function ViewLeaveRequests() {
                         }
                     </tbody>
                 </table>
+                {/* End View Leave Requests Table */}
             </div>
         </div>
     )

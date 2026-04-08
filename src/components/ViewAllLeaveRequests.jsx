@@ -85,9 +85,9 @@ function ViewAllLeaveRequests() {
             <div>
                 <h2 className="text-xl mb-5">All Requests</h2>
                 <div className="flex flex-wrap">
-                    <table className="w-full border-collapse border-blue-50">
+                    <table className="w-full bg-blue-500 border-collapse border-blue-50">
                         <thead className="border-b-1">
-                            <tr className="p-2 bg-blue-700 text-white">
+                            <tr className="p-2 text-white">
                                 <th className="text-center p-2">ID</th>
                                 <th className="text-center p-2">Name</th>
                                 <th className="text-center p-2">Created On</th>

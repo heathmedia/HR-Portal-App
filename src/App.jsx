@@ -33,6 +33,7 @@ function App() {
           <Route path="hrdashboard" element={<HRDashboard />}>
             <Route path="viewAllLeaveRequests" element={<ViewAllLeaveRequests />}></Route>
             <Route path="viewEmployees" element={<ViewAllEmployees />}></Route>
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
       </div>

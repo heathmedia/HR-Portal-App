@@ -8,6 +8,7 @@ function HRDashboard() {
                     <ul className="w-full flex flex-wrap">
                         <li className="mr-4"><Link to="viewEmployees">Employees</Link></li>
                         <li className="mr-4"><Link to="viewAllLeaveRequests">Leave Requests</Link></li>
+                        <li className="mr-4"><Link to="profile">Profile</Link></li>
                     </ul>
                 </nav>
             </div>
