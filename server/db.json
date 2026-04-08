@@ -9,83 +9,32 @@
       "department": "HR"
     },
     {
-      "id": "5678",
-      "email": "sleve@biz.com",
-      "password": "asdf",
-      "name": "Sleve McDichael",
+      "name": "Bob Hill",
+      "email": "bob@hill.com",
+      "department": "Sales",
       "role": "employee",
-      "department": "IT"
+      "id": "WX0BCod6ujg"
     },
     {
-      "id": "e22b",
-      "email": "mario@secure.com",
-      "password": "asdf",
-      "name": "Mario McRlwain",
-      "department": "Security",
-      "role": "employee"
-    },
-    {
-      "id": "5644",
       "name": "Scott Heath",
       "email": "scott@heath.com",
       "department": "Engineering",
-      "role": "hr",
-      "password": "scott"
-    },
-    {
-      "id": "caad",
-      "name": "Millie Rojas",
-      "email": "millie@rojas.com",
-      "department": "Sales",
       "role": "employee",
-      "password": "millie"
-    },
-    {
-      "id": "b6f4",
-      "name": "Test Tester",
-      "email": "test@tester.com",
-      "department": "QA",
-      "role": "employee",
-      "password": "test"
+      "id": "hw7snlk6m7E"
     },
     {
       "name": "Adriana Rojas",
       "email": "adriana@rojas.com",
       "department": "Creative",
       "role": "employee",
-      "id": "QjNHaWQVPsI",
-      "password": "1234"
+      "id": "t3Ei21GmTDU"
     },
     {
-      "name": "John Test",
-      "email": "john@test.com",
-      "department": "QA",
-      "role": "employee",
-      "id": "2qTa5rKltn0",
-      "password": "test"
-    },
-    {
-      "name": "Bob Hill",
-      "email": "bob@hr.com",
+      "name": "Susan Singly",
+      "email": "susan@hr.com",
       "department": "HR",
-      "role": "employee",
-      "id": "X7alW2zdFdY",
-      "password": "hill"
-    },
-    {
-      "name": "Hank Hill",
-      "email": "hank@hill.com",
-      "department": "Sales",
-      "role": "employee",
-      "id": "LSa0LTsqIoE",
-      "password": "propane"
-    },
-    {
-      "name": "Peggy Hill",
-      "email": "hank@hill.com",
-      "department": "Education",
-      "role": "employee",
-      "id": "bWJrCbfdskU"
+      "role": "hr",
+      "id": "x8ctW3Kp7I4"
     }
   ],
   "leaveRequest": [],

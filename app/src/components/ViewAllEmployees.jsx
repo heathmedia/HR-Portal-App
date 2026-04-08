@@ -33,13 +33,22 @@ function ViewAllEmployees() {
 
     const addEmployee = async (event) => {
         event.preventDefault()
+        setErrorMsg('')
+        setMsg('')
         const newEmployee = {
             name,
             email,
             department,
             role
         }
+        const duplicateEmailCheck = employees.filter(user => user.email === newEmployee.email)
+        console.log('dupe check', duplicateEmailCheck)
+        if (duplicateEmailCheck.length > 0) {
+            setErrorMsg('Email is already taken')
+            return
+        }
         const response = await axios.post(USER_URL, newEmployee)
+        setMsg('Employee added')
         setEmployees([...employees, response.data])
         setName('')
         setEmail('')
@@ -95,8 +104,10 @@ function ViewAllEmployees() {
                             </select>
                         </div>
                         <PrimarySubmitButton value="Add Employee"></PrimarySubmitButton>
-                        <span id="errorMsg" className="w-full text-red-500 mb-3">{errorMsg}</span>
-                        <span id="msg" className="w-full text-green-500 mb-3">{msg}</span>
+                        <p id="errorMsg" hidden={!errorMsg}
+                            className="text-red-500 mb-3">{errorMsg}</p>
+                        <p id="msg" hidden={!msg}
+                            className="text-green-600 mb-3">{msg}</p>
                     </div>
                 </form>
                 {/* End Add Employee Form */}
@@ -111,6 +122,7 @@ function ViewAllEmployees() {
                                 <th className="text-center p-2">Name</th>
                                 <th className="text-left p-2">Email</th>
                                 <th className="text-center p-2">Department</th>
+                                <th className="text-center p-2">Role</th>
                                 <th className="text-center p-2">Registered</th>
                                 <th></th>
                             </tr>
@@ -118,7 +130,7 @@ function ViewAllEmployees() {
                         <tbody>
                             {
                                 employees.length === 0 ?
-                                    <tr className="text-center"><td colSpan="4" className="p-2">No employees to display</td></tr> : ''}
+                                    <tr className="text-center"><td colSpan="7" className="p-2">No employees to display</td></tr> : ''}
                             {
                                 employees.map((user, index) => (
                                     <tr key={user?.id}
@@ -127,6 +139,7 @@ function ViewAllEmployees() {
                                         <td className="border-b border-blue-100 p-2">{user?.name}</td>
                                         <td className="border-b border-blue-100 p-2">{user?.email}</td>
                                         <td className="text-center border-b border-blue-100 p-2">{user?.department}</td>
+                                        <td className="text-center border-b border-blue-100 p-2">{user?.role}</td>
                                         <td className="text-center border-b border-blue-100 p-2">
                                             {user?.password ? <i className="text-green-500 fa-solid fa-check"></i> : '-'}</td>
                                         <td className="text-center border-b border-blue-100 p-2">

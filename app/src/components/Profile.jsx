@@ -36,7 +36,9 @@ function Profile() {
     return (
         <>
             <h1 className="text-2xl font-bold mb-5">Profile</h1>
-            <div className="grid border-1 px-10 pt-8 pb-4 w-100 rounded-lg flex flex-wrap">
+            <div className="grid border-1 px-10 pt-6 pb-4 w-100 rounded-lg flex flex-wrap">
+                <p hidden={!isPasswordSaved}
+                    className="text-green-600 mb-2  text-center">Password updated</p>
                 <div className="mb-3 grid grid-cols-1">
                     <p className="font-bold">Name</p>
                     <p>{user?.name}</p>
@@ -63,8 +65,6 @@ function Profile() {
                     <input type="submit" value="Save Password"
                         className="cursor-pointer bg-primary hover:bg-blue-700 text-white 
                                 font-bold mt-4 py-2 px-4 rounded-full disabled:bg-gray-400" />
-                    <p hidden={!isPasswordSaved}
-                        className="text-green-600 mt-5 text-center">Password updated!</p>
                 </form>
             </div>
         </>
