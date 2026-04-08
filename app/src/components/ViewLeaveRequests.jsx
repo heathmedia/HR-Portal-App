@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
+import PrimarySubmitButton from "./PrimarySubmitButton"
 
-function EmployeeDashboard() {
+function ViewLeaveRequests() {
     const API_URL = "http://localhost:3000"
     const REQUEST_URL = API_URL + `/leaveRequest`
     const USER_ID = localStorage.getItem('userId')
@@ -9,14 +10,14 @@ function EmployeeDashboard() {
     console.log("TODAY: ", TODAY)
 
     const statusStyles = {
-        approved: "text-green-700 bg-green-100 border-green-200",
-        pending: "text-yellow-700 bg-yellow-100 border-yellow-200",
-        denied: "text-red-700 bg-red-100 border-red-200",
+        approved: "text-green-700 bg-green-100 border-green-500",
+        pending: "text-yellow-700 bg-yellow-100 border-yellow-500",
+        denied: "text-red-700 bg-red-100 border-red-500",
     };
 
     const StatusBadge = ({ status }) => {
         return (
-            <span className={`capitalize rounded px-2 py-1 ${statusStyles[status]}`}>
+            <span className={`capitalize rounded px-2 py-1 border-1 ${statusStyles[status]}`}>
                 {status}
             </span>
         );
@@ -25,12 +26,12 @@ function EmployeeDashboard() {
     const [leaveRequests, setLeaveRequests] = useState([])
     const [startDate, setStartDate] = useState()
     const [endDate, setEndDate] = useState()
+    const [reason, setReason] = useState('')
     const [msg, setMsg] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
 
     useEffect(() => {
         const getLeaveRequests = async () => {
-            console.log('Getting leave requests...')
             try {
                 const result = await axios.get(REQUEST_URL, { params: { userId: USER_ID } })
                 setLeaveRequests(result.data)
@@ -49,11 +50,8 @@ function EmployeeDashboard() {
 
     const submitRequest = async (event) => {
         event.preventDefault()
-        console.log('submit request')
         setErrorMsg('')
         setMsg('')
-        console.log('start date', startDate)
-        console.log('end date', endDate)
 
         if (!startDate) { setErrorMsg('Select a start date'); return }
         if (!endDate) { setErrorMsg('Select an end date'); return }
@@ -63,22 +61,23 @@ function EmployeeDashboard() {
             userId: USER_ID,
             startDate,
             endDate,
+            reason,
             createdDate: TODAY,
             status: "pending"
         }
 
         const reponse = await axios.post(REQUEST_URL, newRequest)
-        console.log('Saved request: ', newRequest)
         setLeaveRequests([...leaveRequests, reponse.data])
-        setMsg('Leave request saved')
+        setStartDate('')
+        setEndDate('')
+        setReason('')
+        setMsg('Leave request saved!')
     }
 
     const deleteRequest = async (id) => {
-        console.log('delete request: ', id)
         try {
             const response = await axios.delete(REQUEST_URL + "/" + id)
             setLeaveRequests(leaveRequests.filter(item => item.id !== id))
-            console.log('deleted request: ', response)
         } catch (error) {
             console.log('Error deleting request', error)
         }
@@ -86,36 +85,52 @@ function EmployeeDashboard() {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold mb-5">Employee Dashboard</h1>
+            <h1 className="text-2xl font-bold mb-5">Leave Requests</h1>
             <div className="flex flex-wrap">
-                <form onSubmit={submitRequest} className="flex flex-wrap mb-2">
-                    <div className="flex flex-wrap w-full pb-4 justify-between">
-                        <h2 className="text-left text-xl mb-2 w-full">New Leave Request</h2>
-                        <div className="">
+
+                {/* Begin Add Leave Request Form */}
+                <form onSubmit={submitRequest} className="flex flex-wrap mb-6 py-3 items-center">
+                    <div className="flex flex-wrap pb-4 items-center">
+                        <h2 className="text-left text-xl mb-2 w-full">Create New Request</h2>
+                        <div className="mr-4 mb-3">
                             <label htmlFor="startDate" className="mb-2 mr-2">Start Date</label>
                             <input id="startDate" type="date" min={TODAY}
+                                value={startDate}
                                 onChange={(event) => setStartDate(event.target.value)}
                                 className="self-justify-end border-1 px-2 py-1 rounded" />
                         </div>
-                        <div className="">
+                        <div className="mr-4 mb-3">
                             <label htmlFor="endDate" className="mb-2 mr-2">End Date</label>
                             <input id="endDate" type="date" min={startDate ? startDate : TODAY}
+                                value={endDate}
                                 onChange={(event) => setEndDate(event.target.value)}
                                 className="self-justify-end border-1 px-2 py-1 rounded" />
                         </div>
-                        <input type="submit" value="Submit Request"
-                            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full px-2" />
-                        <span id="errorMsg" className="w-full text-red-500 mb-3">{errorMsg}</span>
-                        <span id="msg" className="w-full text-green-500 mb-3">{msg}</span>
+                        <div className="mr-4 mb-3">
+                            <label htmlFor="reason" className="mb-2 mr-2">Reason</label>
+                            <input id="reason" type="text"
+                                value={reason}
+                                onChange={(event) => setReason(event.target.value)}
+                                className="self-justify-end border-1 px-2 py-1 rounded" />
+                        </div>
+                        <PrimarySubmitButton value="Submit Request"></PrimarySubmitButton>
+                        <p id="errorMsg" hidden={!errorMsg}
+                            className="text-red-500 mb-3">{errorMsg}</p>
+                        <p id="msg" hidden={!msg}
+                            className="text-green-600 mb-3">{msg}</p>
                     </div>
                 </form>
+                {/* End Add Leave Request Form */}
+
+                {/* Begin View Leave Requests Table */}
                 <table className="w-full border-collapse border-blue-50">
-                    <caption className="text-left text-xl mb-2">Leave Requests</caption>
+                    <caption className="text-left text-xl mb-2">Your Requests</caption>
                     <thead className="border-b-1">
                         <tr className="p-2 bg-blue-700 text-white">
                             <th className="text-center p-2">Created On</th>
                             <th className="text-center p-2">Start Date</th>
                             <th className="text-center p-2">End Date</th>
+                            <th className="text-center p-2">Reason</th>
                             <th className="text-center p-2">Status</th>
                             <th className="text-center p-2"></th>
                         </tr>
@@ -123,7 +138,8 @@ function EmployeeDashboard() {
                     <tbody>
                         {
                             leaveRequests.length === 0 ?
-                                <tr className="text-center"><td colSpan="4" className="p-2">No leave requests to display</td></tr> : ''}
+                                <tr className="text-center"><td colSpan="5" className="p-2">
+                                    No leave requests to display</td></tr> : ''}
                         {
                             leaveRequests.map((request, index) => (
                                 <tr key={request?.id}
@@ -131,6 +147,7 @@ function EmployeeDashboard() {
                                     <td className="text-center border-b border-blue-100 p-2">{formatDate(request?.createdDate)}</td>
                                     <td className="text-center border-b border-blue-100 p-2">{formatDate(request?.startDate)}</td>
                                     <td className="text-center border-b border-blue-100 p-2">{formatDate(request?.endDate)}</td>
+                                    <td className="text-center border-b border-blue-100 p-2">{request?.reason}</td>
                                     <td className="text-center border-b border-blue-100 p-2">
                                         <StatusBadge status={request.status}></StatusBadge>
                                     </td>
@@ -147,9 +164,10 @@ function EmployeeDashboard() {
                         }
                     </tbody>
                 </table>
+                {/* End View Leave Requests Table */}
             </div>
         </div>
     )
 }
 
-export default EmployeeDashboard
+export default ViewLeaveRequests

@@ -85,14 +85,15 @@ function ViewAllLeaveRequests() {
             <div>
                 <h2 className="text-xl mb-5">All Requests</h2>
                 <div className="flex flex-wrap">
-                    <table className="w-full border-collapse border-blue-50">
+                    <table className="w-full bg-primary-dark border-collapse border-blue-50">
                         <thead className="border-b-1">
-                            <tr className="p-2 bg-blue-700 text-white">
+                            <tr className="p-2 text-white">
                                 <th className="text-center p-2">ID</th>
                                 <th className="text-center p-2">Name</th>
                                 <th className="text-center p-2">Created On</th>
                                 <th className="text-center p-2">Start Date</th>
                                 <th className="text-center p-2">End Date</th>
+                                <th className="text-center p-2">Reason</th>
                                 <th className="text-center p-2">Status</th>
                                 <th className="text-center p-2"></th>
                             </tr>
@@ -100,7 +101,7 @@ function ViewAllLeaveRequests() {
                         <tbody>
                             {
                                 leaveRequests.length === 0 ?
-                                    <tr className="text-center"><td colSpan="4" className="p-2">No leave requests to display</td></tr> : ''}
+                                    <tr className="text-center bg-white"><td colSpan="8" className="p-2">No leave requests to display</td></tr> : ''}
                             {
                                 leaveRequests.map((request, index) => (
                                     <tr key={request?.id}
@@ -110,6 +111,7 @@ function ViewAllLeaveRequests() {
                                         <td className="text-center border-b border-blue-100 p-2">{formatDate(request?.createdDate)}</td>
                                         <td className="text-center border-b border-blue-100 p-2">{formatDate(request?.startDate)}</td>
                                         <td className="text-center border-b border-blue-100 p-2">{formatDate(request?.endDate)}</td>
+                                        <td className="text-center border-b border-blue-100 p-2">{request?.reason}</td>
                                         <td className="text-center border-b border-blue-100 p-2">
                                             <select name="status" id="status" onChange={(event) => updateStatus(request.id, event.target.value)}
                                                 className={`${statusStyles[request.status]} border-1 capitalize rounded px-1 py-1`} value={request.status}>
