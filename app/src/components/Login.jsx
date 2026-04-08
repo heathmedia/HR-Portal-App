@@ -43,7 +43,7 @@ function Login({ onLogin }) {
     }
 
     return (
-        <div className="bg-[url('./assets/bg-water-cooler.jpg')] w-full h-full fixed bg-cover bg-center">
+        <div>
             <form onSubmit={handleSubmit} className="flex items-center mt-20 ml-10">
                 <div className="grid border-1 p-10 pb-5 w-100 rounded-lg flex flex-wrap bg-white">
                     <h1 className="text-center w-full text-2xl font-bold mb-5">Login</h1>

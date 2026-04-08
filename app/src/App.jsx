@@ -13,7 +13,6 @@ import { useState } from "react"
 function App() {
 
   const [userId, setUserId] = useState(localStorage.getItem('userId')?localStorage.getItem('userId'):'')
-  //if(localStorage.getItem('userId')) setUserId(localStorage.getItem('userId'))
 
   const onLogin = (id) => {
     console.log('onlogin: ', id)
@@ -26,7 +25,7 @@ function App() {
   }
 
   return (
-    <>
+    <div className={`${!userId ? "bg-[url('./assets/bg-water-cooler.jpg')]" : ''} w-full h-full absolute bg-cover bg-center`}>
       <NavBar userId={userId} onLogout={onLogout} ></NavBar>
       <div>
         <Routes>
@@ -45,7 +44,7 @@ function App() {
           </Route>
         </Routes>
       </div>
-    </>
+    </div>
   )
 }
 
