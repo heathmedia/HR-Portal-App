@@ -1,36 +1,38 @@
 import { Routes, Route, useNavigate } from "react-router-dom"
-import Login from "./Login"
-import HRDashboard from "./HrDashboard"
-import EmployeeDashboard from "./EmployeeDashboard"
+import Login from "./components/Login"
+import HRDashboard from "./components/HRDashboard"
+import EmployeeDashboard from "./components/EmployeeDashboard"
 import { useEffect } from "react"
-import SignUp from "./SignUp"
+import SignUp from "./components/SignUp"
+import NavBar from "./components/NavBar"
+import Logout from "./components/Logout"
+import ViewAllEmployees from "./components/ViewAllEmployees"
+import ViewAllLeaveRequests from "./components/ViewAllLeaveRequests"
 
 function App() {
 
   const navigate = useNavigate()
-
-  // if (localStorage.getItem("userId") && localStorage.getItem("role")) {
-  //   switch (localStorage.getItem) {
-  //     case "employee":
-  //       break
-  //     case "hr":
-  //       navigate("/hrdashboard")
-  //   }
-  // } else {
-  //   localStorage.removeItem("userId")
-  //   localStorage.removeItem("role")
-  //   navigate("/")
-  // }
+  const userId = localStorage.getItem('userId')
+  const role = localStorage.getItem('role')
 
   return (
     <>
-      <h1>HR Portal</h1>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/dashboard" element={<EmployeeDashboard />} />
-        <Route path="/hrdashboard" element={<HRDashboard />} />
-      </Routes>
+      <NavBar userId={userId} role={role}></NavBar>
+      <div>
+        <Routes>
+          <Route path="" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
+
+          <Route path="dashboard" element={<EmployeeDashboard />} />
+
+          <Route path="hrdashboard" element={<HRDashboard />}>
+            <Route path="viewAllLeaveRequests" element={<ViewAllLeaveRequests />}></Route>
+            <Route path="viewEmployees" element={<ViewAllEmployees />}></Route>
+          </Route>
+
+          <Route path="logout" element={<Logout />} />
+        </Routes>
+      </div>
     </>
   )
 }
